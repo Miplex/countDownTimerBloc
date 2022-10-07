@@ -22,7 +22,7 @@ class ScrollWidget extends StatelessWidget {
                   child:  BlocBuilder<ScrollingBloc, ScrollingInitialState>(
                   builder: (context, state) {
                     return AnimatedOpacity(
-                    opacity: state.downTimer.scrollOpacity,//(context).watch<DownTimer>().getScrollOpacity,
+                    opacity: state.downTimer.scrollOpacity,
                     duration: const Duration(milliseconds: 100),
                     child:  SizedBox(
                       height: 200,

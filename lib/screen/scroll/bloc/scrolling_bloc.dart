@@ -69,9 +69,7 @@ late DownTimer _downTimer;
     if (click == false) {
       _downTimer = _downTimer.copyWith(countDownOpacity: 0.0, scrollOpacity: 1.0, buttonOpacity: 1.0);
       visibleButton();
-      //print(click);
     } else if (click == true) {
-      //print(click);
       _downTimer = _downTimer.copyWith(countDownOpacity: 1.0, scrollOpacity: 0.0, buttonOpacity: 0.0);
       visibleButton();
     }
@@ -80,7 +78,6 @@ late DownTimer _downTimer;
   void visibleButton() {
     if (_downTimer.buttonOpacity == 1.0) {
       _downTimer = _downTimer.copyWith(isIgnoring: false);
-      //print(_downTimer.visible);
     } else if (_downTimer.buttonOpacity == 0.0) {
       _downTimer = _downTimer.copyWith(isIgnoring: true);
     }
@@ -88,11 +85,9 @@ late DownTimer _downTimer;
 
   void swipeBlocked(bool click) {
     if (click == false) {
-     // print(_downTimer.scrollOpacity);
      _downTimer = _downTimer.copyWith(isSwipeBlocked: false);
     } else if (click == true) {
      _downTimer = _downTimer.copyWith(isSwipeBlocked: true);
-      //print(_downTimer.isSwipeBlocked);
     }
   }
 
