@@ -1,7 +1,4 @@
-import 'dart:async';
 
-import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
 
 class DownTimer {
   //принято переменные делать final потом использовать copyWith
