@@ -19,19 +19,15 @@ late DownTimer _downTimer;
       addIndex(event.index);
       emit(ScrollingInitialState(_downTimer));
       playSound();
-      //print('IndexScrollEvent');
     });
 
     on<VisibleButtonEvent>((event, emit){
       addIndex(event.index);
       clickButton(true);
       countDownTime();
-     // print(event.index);
-      //print('VisibleButtonEvent');
       emit(ScrollingInitialState(_downTimer));
     });
     on<TimeUpdateEvent>((event, emit){
-     // print('TimeUpdateEvent');
       emit(ScrollingInitialState(_downTimer));
     });
 
@@ -49,13 +45,11 @@ late DownTimer _downTimer;
         swipeBlocked(false);
         timer.cancel();
         add(TimeUpdateEvent());
-        //print('clickButton(false)');
       } else {
         clickButton(true);
         swipeBlocked(true);
        _downTimer = _downTimer.copyWith(timerSecond: _downTimer.timerSecond - 1);
         add(TimeUpdateEvent());
-        //print('clickButton(true)');
       }
     });
   }
@@ -89,18 +83,16 @@ late DownTimer _downTimer;
       //print(_downTimer.visible);
     } else if (_downTimer.buttonOpacity == 0.0) {
       _downTimer = _downTimer.copyWith(isIgnoring: true);
-      // print(_downTimer.visible);
-      // print(_downTimer.buttonOpacity);
     }
   }
 
   void swipeBlocked(bool click) {
     if (click == false) {
-      print(_downTimer.scrollOpacity);
+     // print(_downTimer.scrollOpacity);
      _downTimer = _downTimer.copyWith(isSwipeBlocked: false);
     } else if (click == true) {
      _downTimer = _downTimer.copyWith(isSwipeBlocked: true);
-      print(_downTimer.isSwipeBlocked);
+      //print(_downTimer.isSwipeBlocked);
     }
   }
 

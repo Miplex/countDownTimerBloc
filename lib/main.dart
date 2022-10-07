@@ -11,25 +11,7 @@ void main() {
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(MyApp());
-  /*  MultiProvider(providers: [
-      ChangeNotifierProvider(create: (_) => DownTimer()),
-    ], child: MyApp()),*/
 }
-
-//
-// void main() {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   SystemChrome.setPreferredOrientations(
-//       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-//   runApp(
-//     MultiBlocProvider(
-//         providers: [
-//           BlocProvider<DownTimer>(
-//               create:  (_) => DownTimer()
-//           )
-//     ], child: MyApp()),
-//   );
-// }
 
 
 class MyApp extends StatelessWidget {

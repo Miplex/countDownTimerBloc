@@ -34,7 +34,6 @@ class ScrollWidget extends StatelessWidget {
                         controller: _pageController,
                         onPageChanged: (int index) {
                           context.read<ScrollingBloc>().add(IndexScrollEvent(index));
-                         // print(state.downTimer.isSwipeBlocked);
                         },
                         itemBuilder: (context, i) {
                           return Opacity(
@@ -51,7 +50,7 @@ class ScrollWidget extends StatelessWidget {
                                 scale: animation.value,
                                 child: Center(
                                   child: Text(
-                                      '${state.downTimer.list[i]}',//'${context.read<ScrollingBloc>().getSecond[i]}',// '${state.scrollValue[i]} подумать как работает', //'${context.read<ScrollCubit>().getSecond[i]}',
+                                      '${state.downTimer.list[i]}',
                                     style: TextStyle(
                                         fontFamily: 'RobotoLight',
                                         fontSize: 60,
@@ -76,14 +75,14 @@ class ScrollWidget extends StatelessWidget {
         BlocBuilder<ScrollingBloc, ScrollingInitialState>(
           builder: (context, state) {
         return AnimatedOpacity(
-          opacity: state.downTimer.countDownOpacity,//(context).watch<DownTimer>().getCountDownOpacity,
+          opacity: state.downTimer.countDownOpacity,
           duration: const Duration(milliseconds: 100),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 65.0),
             child: Center(
               child: Transform.scale(
                 scale: 2,
-                child: Text( '${state.downTimer.timerSecond}', //'${context.watch<DownTimer>().getData}',
+                child: Text( '${state.downTimer.timerSecond}',
                     style: TextStyle(
                         fontFamily: 'RobotoLight',
                         fontSize: 60,

@@ -10,7 +10,6 @@ class ButtonAnimatedVisibility extends StatelessWidget {
   }) : _controller = controller, super(key: key);
 
   final AnimationController _controller;
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ScrollingBloc, ScrollingInitialState>(
@@ -25,10 +24,13 @@ class ButtonAnimatedVisibility extends StatelessWidget {
               child: FloatingActionButton(
                 onPressed: () {
                   int index = state.downTimer.index;
+                  int second =  index == 0 ? 1 : index * 5;
+                 // print(index);
+                  print(second);
                   context.read<ScrollingBloc>().add(VisibleButtonEvent(index));
                   _controller.forward();
                   Future.delayed(const Duration(milliseconds: 800), () {
-                    _controller.duration = Duration(seconds: state.downTimer.timerSecond);
+                    _controller.duration = Duration(seconds: second);
                     _controller.reverse();
                     _controller.duration = Duration(milliseconds: 800);
                   });
