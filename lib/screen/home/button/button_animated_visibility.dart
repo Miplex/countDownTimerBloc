@@ -25,8 +25,6 @@ class ButtonAnimatedVisibility extends StatelessWidget {
                 onPressed: () {
                   int index = state.downTimer.index;
                   int second =  index == 0 ? 1 : index * 5;
-                 // print(index);
-                  print(second);
                   context.read<ScrollingBloc>().add(VisibleButtonEvent(index));
                   _controller.forward();
                   Future.delayed(const Duration(milliseconds: 800), () {
