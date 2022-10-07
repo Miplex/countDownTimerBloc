@@ -3,89 +3,165 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 
-class DownTimer with ChangeNotifier {
-  int _timerSecond = 1;
-  int _index = 0;
-  double _scrollOpacity = 1.0;
-  double _countdownOpacity = 0.0;
-  bool _visible = true;
-  bool _isSwipeBlocked = false;
-  double _buttonOpacity = 1.0;
+class DownTimer {
+  //принято переменные делать final потом использовать copyWith
+ final int timerSecond;
+ final int index;
+ final double scrollOpacity;
+ final double countDownOpacity;
+ final double buttonOpacity;
+ final bool isIgnoring;
+ final bool isSwipeBlocked;
+ final List list;
 
-  double get getButtonOpacity => _buttonOpacity;
-  bool get getVisibleButton => _visible;
-  bool get getSwipeBlocked => _isSwipeBlocked;
-  double get getScrollOpacity => _scrollOpacity;
 
-  double get getCountDownOpacity => _countdownOpacity;
+  DownTimer({
+    required this.timerSecond,
+    required this.index,
+    required this.scrollOpacity,
+    required this.countDownOpacity,
+    required this.isIgnoring,
+    required this.isSwipeBlocked,
+    required this.buttonOpacity,
+    required this.list
+  });
 
-  int get getIndex => _index;
+ DownTimer copyWith({
+   int? timerSecond,
+   int? index,
+   double? scrollOpacity,
+   double? countDownOpacity,
+   double? buttonOpacity,
+   bool? isIgnoring,
+   bool? isSwipeBlocked,
+   List? list
+ }) {
+   return DownTimer(
+       timerSecond: timerSecond ?? this.timerSecond,
+       index: index ?? this.index,
+       scrollOpacity: scrollOpacity ?? this.scrollOpacity,
+       countDownOpacity: countDownOpacity ?? this.countDownOpacity,
+       buttonOpacity: buttonOpacity ?? this.buttonOpacity,
+       isIgnoring: isIgnoring ?? this.isIgnoring,
+       isSwipeBlocked: isSwipeBlocked ?? this.isSwipeBlocked,
+       list: list ?? this.list
+   );
+ }
+// class DownTimer {
+//  final int timerSecond;
+//  final int index;
+//  final double scrollOpacity;
+//  final double countDownOpacity;
+//  final bool visible;
+//  final bool isSwipeBlocked;
+//  final double buttonOpacity;
+//
+//  DownTimer({
+//    required this.timerSecond,
+//    required this.index,
+//    required this.scrollOpacity,
+//    required this.countDownOpacity,
+//    required this.visible,
+//    required this.isSwipeBlocked,
+//    required this.buttonOpacity
+// });
+//
+//  DownTimer copyWith({
+//    int? timerSecond,
+//    int? index,
+//    double? scrollOpacity,
+//    double? countDownOpacity,
+//    double? buttonOpacity,
+//    bool? visible,
+//    bool? isSwipeBlocked,
+// }){
+//    return DownTimer(
+//        timerSecond: timerSecond ?? this.timerSecond,
+//        index: index ?? this.index,
+//        scrollOpacity: scrollOpacity ?? this.scrollOpacity,
+//        countDownOpacity: countDownOpacity ?? this.countDownOpacity,
+//        buttonOpacity: buttonOpacity ?? this.buttonOpacity,
+//        visible: visible ?? this.visible,
+//        isSwipeBlocked: isSwipeBlocked ?? this.isSwipeBlocked,
+//
+//    );
+//  }
+//   double get getButtonOpacity => _buttonOpacity;
+//   bool get getVisibleButton => _visible;
+//   bool get getSwipeBlocked => _isSwipeBlocked;
+//   double get getScrollOpacity => _scrollOpacity;
+//
+//   double get getCountDownOpacity => _countdownOpacity;
+//
+//   int get getIndex => _index;
+//
+//   int get getData => _timerSecond;
 
-  int get getData => _timerSecond;
+ // List _list = List.generate(13, (int index) => index == 0 ? 1 : index * 5);
 
-  List _list = List.generate(13, (int index) => index == 0 ? 1 : index * 5);
+//  List get getSecond => _list;
 
-  List get getSecond => _list;
-
-  void countDownTime() {
+   /*void countDownTime() {
     Timer.periodic(Duration(seconds: 1), (timer) {
-      if (_timerSecond == 0) {
+      if (timerSecond == 0) {
         clickButton(false);
         swipeBlocked();
         timer.cancel();
-        notifyListeners();
+       // notifyListeners();
       } else {
         clickButton(true);
         swipeBlocked();
-        _timerSecond--;
-        notifyListeners();
+        timerSecond--;
+      //  notifyListeners();
       }
     });
   }
 
   addIndex(int index) {
-    _index = index;
-    _timerSecond = index == 0 ? 1 : index * 5;
-    notifyListeners();
+    index = index;
+    timerSecond = index == 0 ? 1 : index * 5;
+  //  notifyListeners();
   }
 
   void playSound() {
     final player = AudioCache();
     player.play('audio/select.wav');
-    notifyListeners();
+   // notifyListeners();
   }
 
   void swipeBlocked() {
-    if (_scrollOpacity == 1.0) {
-      _isSwipeBlocked = false;
-    } else if (_scrollOpacity == 0.0) {
-      _isSwipeBlocked = true;
+    if (scrollOpacity == 1.0) {
+      isSwipeBlocked = false;
+    } else if (scrollOpacity == 0.0) {
+      isSwipeBlocked = true;
     }
-    notifyListeners();
+    //notifyListeners();
   }
 
   void visibleButton() {
-    if (_buttonOpacity == 1.0) {
-      _visible = true;
-    } else if (_buttonOpacity == 0.0) {
-      _visible = false;
+    if (buttonOpacity == 1.0) {
+      visible = true;
+    } else if (buttonOpacity == 0.0) {
+      visible = false;
     }
 
-    notifyListeners();
+   // notifyListeners();
   }
 
   void clickButton(bool click) {
     if (click == false) {
-      _countdownOpacity = 0.0;
-      _scrollOpacity = 1.0;
-      _buttonOpacity = 1.0;
+      countDownOpacity = 0.0;
+      scrollOpacity = 1.0;
+      buttonOpacity = 1.0;
       visibleButton();
     } else if (click == true) {
-      _scrollOpacity = 0.0;
-      _countdownOpacity = 1.0;
-      _buttonOpacity = 0.0;
+      scrollOpacity = 0.0;
+      countDownOpacity = 1.0;
+      buttonOpacity = 0.0;
       visibleButton();
     }
-    notifyListeners();
+    //notifyListeners();
   }
+*/
+
 }

@@ -1,7 +1,10 @@
 import 'package:animated/animated.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/model/down_timer.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'bloc/scrolling_bloc.dart';
+
+
+
 
 class ScrollWidget extends StatelessWidget {
   final PageController _pageController = PageController(viewportFraction: 0.4);
@@ -16,28 +19,30 @@ class ScrollWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
-                  child: AnimatedOpacity(
-                    opacity: (context).watch<DownTimer>().getScrollOpacity,
+                  child:  BlocBuilder<ScrollingBloc, ScrollingInitialState>(
+                  builder: (context, state) {
+                    return AnimatedOpacity(
+                    opacity: state.downTimer.scrollOpacity,//(context).watch<DownTimer>().getScrollOpacity,
                     duration: const Duration(milliseconds: 100),
-                    child: SizedBox(
+                    child:  SizedBox(
                       height: 200,
                       child: PageView.builder(
-                        physics: (context).watch<DownTimer>().getSwipeBlocked
+                        physics: state.downTimer.isSwipeBlocked
                             ? NeverScrollableScrollPhysics()
                             : null,
                         itemCount: 13,
                         controller: _pageController,
                         onPageChanged: (int index) {
-                          (context).read<DownTimer>().addIndex(index);
-                          (context).read<DownTimer>().playSound();
+                          context.read<ScrollingBloc>().add(IndexScrollEvent(index));
+                         // print(state.downTimer.isSwipeBlocked);
                         },
                         itemBuilder: (context, i) {
                           return Opacity(
-                            opacity: i == (context).read<DownTimer>().getIndex
+                            opacity: i ==  context.read<ScrollingBloc>().getIndex
                                 ? 1
                                 : 0.3,
                             child: Animated(
-                              value: i == (context).read<DownTimer>().getIndex
+                              value: i ==  context.read<ScrollingBloc>().getIndex
                                   ? 2
                                   : 0.9,
                               duration: const Duration(milliseconds: 250),
@@ -46,7 +51,7 @@ class ScrollWidget extends StatelessWidget {
                                 scale: animation.value,
                                 child: Center(
                                   child: Text(
-                                    '${context.watch<DownTimer>().getSecond[i]}',
+                                      '${state.downTimer.list[i]}',//'${context.read<ScrollingBloc>().getSecond[i]}',// '${state.scrollValue[i]} подумать как работает', //'${context.read<ScrollCubit>().getSecond[i]}',
                                     style: TextStyle(
                                         fontFamily: 'RobotoLight',
                                         fontSize: 60,
@@ -59,21 +64,26 @@ class ScrollWidget extends StatelessWidget {
                         },
                       ),
                     ),
-                  ),
+);
+
+  },
+),
                 ),
               ],
             ),
           ],
         ),
-        AnimatedOpacity(
-          opacity: (context).watch<DownTimer>().getCountDownOpacity,
+        BlocBuilder<ScrollingBloc, ScrollingInitialState>(
+          builder: (context, state) {
+        return AnimatedOpacity(
+          opacity: state.downTimer.countDownOpacity,//(context).watch<DownTimer>().getCountDownOpacity,
           duration: const Duration(milliseconds: 100),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 65.0),
             child: Center(
               child: Transform.scale(
                 scale: 2,
-                child: Text('${context.watch<DownTimer>().getData}',
+                child: Text( '${state.downTimer.timerSecond}', //'${context.watch<DownTimer>().getData}',
                     style: TextStyle(
                         fontFamily: 'RobotoLight',
                         fontSize: 60,
@@ -81,7 +91,9 @@ class ScrollWidget extends StatelessWidget {
               ),
             ),
           ),
-        ),
+        );
+  },
+),
       ],
     );
   }

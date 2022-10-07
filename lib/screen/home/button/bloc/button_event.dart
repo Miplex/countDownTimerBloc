@@ -10,6 +10,7 @@ class ButtonAddOpacityEvent extends ButtonEvent{}
 
 class ButtonRemoveOpacityEvent extends ButtonEvent{}
 
+class ButtonClickEvent extends ButtonEvent{}
 // class ButtonVisibleEvent extends ButtonEvent{}
 //
 // class ButtonUnVisibleEvent extends ButtonEvent{}

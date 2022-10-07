@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/model/down_timer.dart';
-import 'package:provider/provider.dart';
 import '../../constants.dart';
 import '../scroll/scroll_widget.dart';
 import 'button/button_animated_visibility.dart';

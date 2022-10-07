@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/model/down_timer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../constants.dart';
-import 'bloc/button_bloc.dart';
+import '../../scroll/bloc/scrolling_bloc.dart';
 
 class ButtonAnimatedVisibility extends StatelessWidget {
   const ButtonAnimatedVisibility({
@@ -14,41 +13,25 @@ class ButtonAnimatedVisibility extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ButtonBloc, ButtonState>(
+    return BlocBuilder<ScrollingBloc, ScrollingInitialState>(
       builder: (context, state) {
         return AnimatedOpacity(
           duration: const Duration(milliseconds: 300),
-          opacity: state.isOpaque,
-          child: Visibility(
-            visible: state.isVisible,
+          opacity: state.downTimer.buttonOpacity,
+          child: IgnorePointer(
+            ignoring: state.downTimer.isIgnoring,
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 120.0),
               child: FloatingActionButton(
                 onPressed: () {
-                  int index = (context)
-                      .read<DownTimer>()
-                      .getIndex;
-                  (context).read<DownTimer>().addIndex(index);
-                  (context).read<DownTimer>().clickButton(true);
-                  context.read<ButtonBloc>().add(ButtonRemoveOpacityEvent());
-                  // _homeBloc.add(ButtonUnVisibleEvent());
+                  int index = state.downTimer.index;
+                  context.read<ScrollingBloc>().add(VisibleButtonEvent(index));
                   _controller.forward();
-                  //  print(state.isVisible);
-
                   Future.delayed(const Duration(milliseconds: 800), () {
-                    _controller.duration =
-                        Duration(seconds: (context)
-                            .read<DownTimer>()
-                            .getData);
-                    //_controller.reverse();
-                    _controller.reverse().whenComplete(() =>
-                        context.read<ButtonBloc>().add(
-                            ButtonAddOpacityEvent()));
+                    _controller.duration = Duration(seconds: state.downTimer.timerSecond);
+                    _controller.reverse();
                     _controller.duration = Duration(milliseconds: 800);
                   });
-                  if (_controller.isAnimating) {
-                    (context).read<DownTimer>().countDownTime();
-                  }
                 },
                 backgroundColor: kPrimaryColor,
               ),
